@@ -2,53 +2,38 @@
 
 A beautiful, customizable exam progress tracker built with Cloudflare Workers + KV. Features an iOS-inspired liquid glass design and admin panel for easy management.
 
-## Features
+## ✨ Features
 
-- ✨ Beautiful iOS liquid glass design
+- 🎨 Beautiful iOS liquid glass design
 - 🔐 Admin panel to manage exams
 - 📊 Real-time progress tracking
 - 🔍 Search and filter functionality
+- 📍 Exam locations
 - 💾 Data stored in Cloudflare KV
-- 🚀 Easy to deploy
+- 🚀 **Deploy in 5 minutes!**
 - 🌍 Open source - anyone can install their own
+- 💰 **FREE** on Cloudflare Workers
 
-## Quick Start
+## 🚀 Quick Deploy
 
-### 1. Clone and Install
+See [DEPLOY.md](DEPLOY.md) for step-by-step instructions.
 
+**TL;DR:**
 ```bash
-cd /Users/abumuaaz/vscode/examTracker
 npm install
+npx wrangler login
+npx wrangler kv namespace create "EXAM_DATA"
+# Update wrangler.toml with KV ID and password
+npx wrangler deploy
 ```
 
-### 2. Create KV Namespace
+## Demo
 
-```bash
-wrangler kv:namespace create "EXAM_DATA"
-```
+**Live Demo:** https://exam-tracker.asrulmunir.workers.dev
+**Admin Panel:** https://exam-tracker.asrulmunir.workers.dev/admin
+(Password: changeme123)
 
-Copy the ID and update `wrangler.toml`:
-
-```toml
-[[kv_namespaces]]
-binding = "EXAM_DATA"
-id = "your-kv-id-here"
-```
-
-### 3. Set Admin Password
-
-Update `wrangler.toml`:
-
-```toml
-[vars]
-ADMIN_PASSWORD = "your-secure-password"
-```
-
-### 4. Deploy
-
-```bash
-wrangler deploy
-```
+## Usage
 
 ## Usage
 
@@ -61,6 +46,20 @@ Visit your deployed URL to see the exam tracker.
 3. Configure title and description
 4. Add/edit/delete exams
 5. Save changes
+
+## Configuration
+
+### Change Admin Password
+Edit `wrangler.toml`:
+```toml
+[vars]
+ADMIN_PASSWORD = "your-new-password"
+```
+
+Then redeploy:
+```bash
+npx wrangler deploy
+```
 
 ## Exam Data Format
 
