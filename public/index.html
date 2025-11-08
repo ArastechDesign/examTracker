@@ -285,6 +285,7 @@
                                                 </div>
                                                 <p class="text-sm text-gray-600">Code: ${exam.code}</p>
                                                 <p class="text-sm text-gray-600">Time: ${exam.time}${exam.endTime ? ' - ' + exam.endTime : ''}</p>
+                                                ${exam.location ? `<p class="text-sm text-gray-600">📍 ${exam.location}</p>` : ''}
                                             </div>
                                             <span class="px-3 py-1 rounded-full text-xs font-semibold ${config.badge} shadow-md">
                                                 ${config.label}
