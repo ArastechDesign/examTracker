@@ -52,8 +52,6 @@ See [DEPLOY.md](DEPLOY.md) for step-by-step CLI instructions.
 
 ## Usage
 
-## Usage
-
 ### Public View
 Visit your deployed URL to see the exam tracker.
 
