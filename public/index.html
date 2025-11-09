@@ -92,6 +92,7 @@
                     <button onclick="unselectAll(); event.stopPropagation();" class="glass-button px-4 py-2 text-white text-sm font-semibold rounded-xl" style="background: rgba(107, 114, 128, 0.9);">Unselect All</button>
                     <input type="text" id="searchSubject" placeholder="Search..." onkeyup="searchSubjects()" class="flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" onclick="event.stopPropagation();">
                 </div>
+                <div id="categoryFilter" class="flex flex-wrap gap-2" onclick="event.stopPropagation();"></div>
                 <div id="subjectSelection" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
             </div>
         </div>
@@ -112,6 +113,7 @@
         let selectedSubjects = [];
         let timelineFilterSubject = 'all';
         let searchQuery = '';
+        let selectedCategory = 'all';
 
         async function loadData() {
             try {
@@ -129,6 +131,7 @@
                 
                 selectedSubjects = JSON.parse(localStorage.getItem('selectedSubjects')) || exams.map(e => e.code);
                 
+                renderCategoryFilter();
                 renderSubjectSelection();
                 updateFilterDropdown();
                 renderTimeline();
@@ -172,6 +175,13 @@
             const uniqueSubjects = [...new Map(exams.map(e => [e.code, e])).values()];
             
             let filteredSubjects = uniqueSubjects;
+            
+            // Filter by category
+            if (selectedCategory !== 'all') {
+                filteredSubjects = filteredSubjects.filter(exam => exam.category === selectedCategory);
+            }
+            
+            // Filter by search
             if (searchQuery) {
                 filteredSubjects = filteredSubjects.filter(exam => 
                     exam.name.toLowerCase().includes(searchQuery) || 
@@ -194,6 +204,25 @@
                     <span class="text-sm font-medium text-gray-700">${exam.name}</span>
                 </label>
             `).join('');
+        }
+
+        function renderCategoryFilter() {
+            const categories = ['all', ...new Set(exams.map(e => e.category).filter(c => c))];
+            const container = document.getElementById('categoryFilter');
+            
+            container.innerHTML = categories.map(cat => `
+                <button onclick="filterByCategory('${cat}')" 
+                        id="cat-${cat}" 
+                        class="px-4 py-2 rounded-xl text-sm font-medium transition-all ${selectedCategory === cat ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700 border border-gray-300'}">
+                    ${cat === 'all' ? 'All Categories' : cat}
+                </button>
+            `).join('');
+        }
+
+        function filterByCategory(category) {
+            selectedCategory = category;
+            renderCategoryFilter();
+            renderSubjectSelection();
         }
 
         function toggleSubject(code) {
