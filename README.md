@@ -1,16 +1,19 @@
 # Exam Tracker
 
-A beautiful, customizable exam progress tracker built with Cloudflare Workers + KV. Features an iOS-inspired liquid glass design and admin panel for easy management.
+A beautiful, customizable exam progress tracker built with Cloudflare Workers + KV. Features an iOS-inspired liquid glass design, dual-language support (English/Malay), and an enhanced admin panel for easy management.
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/asrulmunir/examTracker)
 
 ## ✨ Features
 
 - 🎨 Beautiful iOS liquid glass design
-- 🔐 Admin panel to manage exams
+- 🌍 **Dual-language support** (English/Malay)
+- 🔐 Enhanced admin panel with modal editor
 - 📊 Real-time progress tracking
 - 🔍 Search and filter functionality
 - 📍 Exam locations
+- ⚡ Quick add buttons for rapid exam creation
+- 📥 Bulk import/export functionality
 - 💾 Data stored in Cloudflare KV
 - 🚀 **Deploy in 5 minutes!**
 - 🌍 Open source - anyone can install their own
