@@ -30,6 +30,10 @@ See [ONE_CLICK_DEPLOY.md](ONE_CLICK_DEPLOY.md) for GitHub Actions deployment.
 3. Run workflow with your password
 4. Done! ✨
 
+### Option 1.5: One-Click Update (For Existing Deployments)
+Already have a deployment? Update to v1.0.1 with one click!
+See [ONE_CLICK_UPDATE.md](ONE_CLICK_UPDATE.md) for easy updating.
+
 ### Option 2: Interactive Setup Script
 ```bash
 git clone <repo-url>
@@ -93,7 +97,27 @@ Visit your deployed URL to see the exam tracker.
 
 ### From v1.0.0 to v1.0.1
 
-If you have an existing v1.0.0 deployment and want to update to v1.0.1 with the new features:
+#### Option A: One-Click Update (Easiest!)
+If you deployed using GitHub Actions, you can update with one click:
+
+1. **Find your KV Namespace ID:**
+   - Go to https://dash.cloudflare.com/
+   - Click **Workers & Pages** → **KV**
+   - Find your namespace (usually ends with `EXAM_DATA`)
+   - Copy the **Namespace ID** (looks like: `abc123def456...`)
+
+2. **Trigger the update:**
+   - Go to **Actions** tab in your forked repo
+   - Click **Update to Latest Version**
+   - Click **Run workflow**
+   - Enter your **existing worker name** (e.g., `spm-2025`)
+   - Enter your **KV Namespace ID**
+   - Click **Run workflow**
+
+**That's it!** Your deployment will be updated in ~1 minute with all new features.
+
+#### Option B: Manual Update
+If you prefer manual update:
 
 ```bash
 # Pull latest changes

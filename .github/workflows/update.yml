@@ -1,0 +1,54 @@
+name: Update to Latest Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      worker_name:
+        description: 'Your existing Worker Name (e.g., spm-2025, finals-tracker)'
+        required: true
+        default: 'exam-tracker'
+      kv_namespace_id:
+        description: 'Your existing KV Namespace ID (from Cloudflare dashboard)'
+        required: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    name: Update Deployment
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Update wrangler.toml
+        run: |
+          sed -i 's/name = ".*"/name = "${{ github.event.inputs.worker_name }}"/' wrangler.toml
+          sed -i 's/id = ".*"/id = "${{ github.event.inputs.kv_namespace_id }}"/' wrangler.toml
+          # Keep existing password or use default
+          if ! grep -q 'ADMIN_PASSWORD = ' wrangler.toml; then
+            echo 'ADMIN_PASSWORD = "changeme123"' >> wrangler.toml
+          fi
+
+      - name: Deploy Update to Cloudflare Workers
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Update Info
+        run: |
+          echo "✅ Update successful!"
+          echo "🌐 Your updated tracker: https://${{ github.event.inputs.worker_name }}.YOUR-USERNAME.workers.dev"
+          echo "🔐 Admin panel: https://${{ github.event.inputs.worker_name }}.YOUR-USERNAME.workers.dev/admin"
+          echo ""
+          echo "✨ New features in v1.0.1:"
+          echo "  🌍 Dual-language support (English/Malay)"
+          echo "  🎨 Enhanced admin interface with modal editor"
+          echo "  ⚡ Quick add buttons for rapid exam creation"
+          echo "  📥 Bulk import/export functionality"
+          echo "  🔧 Improved form validation and UX"
