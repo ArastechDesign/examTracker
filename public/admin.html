@@ -237,7 +237,6 @@
                             </svg>
                             Add New Exam
                         </button>
-                        <button onclick="saveExams()" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 ml-3 font-semibold" data-translate="saveAll">Save All</button>
                     </div>
                     <div id="examsList" class="space-y-4"></div>
                 </div>
@@ -452,12 +451,15 @@
                 exams.push(examData);
             }
 
+            // Auto-save immediately
+            await saveExams();
+
             renderExams();
             hideExamModal();
         });
 
         // Quick add functions
-        function quickAddExam(type) {
+        async function quickAddExam(type) {
             const today = new Date();
             let targetDate;
 
@@ -487,12 +489,16 @@
             };
 
             exams.push(examData);
+
+            // Auto-save immediately
+            await saveExams();
+
             renderExams();
             toggleQuickAddMenu();
         }
 
         // Bulk import
-        function processBulkImport() {
+        async function processBulkImport() {
             const jsonData = document.getElementById('bulkImportData').value.trim();
 
             if (!jsonData) {
@@ -516,6 +522,10 @@
 
                 // Add imported exams
                 exams.push(...importedExams);
+
+                // Auto-save immediately
+                await saveExams();
+
                 renderExams();
                 hideBulkImportModal();
 
